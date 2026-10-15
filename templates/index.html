@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RehabApp 🦾</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦾</text></svg>">
+</head>
+<body>
+
+    <aside id="sidebar">
+        <h1>RehabApp 🦾</h1>
+        <div class="exercise-list">
+            <button class="btn active" onclick="changeExercise('flexion', this)">Index Finger Flexion</button>
+            <button class="btn" onclick="changeExercise('open_close', this)">Hand Open/Close</button>
+        </div>
+
+        <div class="summary-section">
+            <h3 style="margin-top:0">Session Summary</h3>
+            <p id="summary-label">Flexion Max: <span id="max-val">0</span>°</p>
+            <p>Reps Counted: <span id="rep-count">0</span></p>
+            <button class="btn" style="width:100%; text-align:center; background: #dfe6e9;" onclick="resetSummary()">Reset Session</button>
+        </div>
+    </aside>
+
+    <main id="main-viewport">
+        <div class="video-wrapper">
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="output_canvas" style="display:none;"></canvas>
+        </div>
+
+        <div class="status-grid">
+            <div class="data-card">
+                <div class="stat-label" id="current-label">Current Angle</div>
+                <div class="stat-value" id="current-value">0°</div>
+            </div>
+            <div class="data-card">
+                <div class="stat-label">Progress to Goal</div>
+                <div class="progress-bg">
+                    <div id="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</body>
+</html>

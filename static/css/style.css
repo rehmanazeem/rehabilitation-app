@@ -1,0 +1,108 @@
+:root {
+    --bg: #f8f9fa;
+    --sidebar-bg: #ffffff;
+    --primary: #0984e3;
+    --accent: #00b894;
+    --text: #2d3436;
+    --border: #dfe6e9;
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Sidebar */
+#sidebar {
+    background: var(--sidebar-bg);
+    padding: 2rem;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+}
+
+.exercise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn {
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+    text-align: left;
+}
+
+.btn.active {
+    border-color: var(--primary);
+    background: #e1f5fe;
+    color: var(--primary);
+}
+
+.summary-section {
+    margin-top: auto;
+    padding: 1.5rem;
+    background: #f1f2f6;
+    border-radius: 12px;
+}
+
+/* Main Viewport */
+#main-viewport {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    overflow-y: auto;
+}
+
+.video-wrapper {
+    width: 95%;
+    max-width: 1100px; /* Increased Size */
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+#video-feed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+}
+
+/* Status Cards */
+.status-grid {
+    width: 95%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.data-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+}
+
+.stat-label { font-size: 0.85rem; color: #636e72; text-transform: uppercase; }
+.stat-value { font-size: 2rem; font-weight: 800; margin: 10px 0; color: var(--primary); }
+
+.progress-bg { height: 12px; background: #eee; border-radius: 6px; overflow: hidden; }
+#progress-bar { height: 100%; background: var(--accent); transition: width 0.3s ease; }
