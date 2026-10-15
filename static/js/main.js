@@ -1,4 +1,6 @@
-// Add this to the top of your DOMContentLoaded listener
+// =============================================================================
+// Browser webcam preview
+// =============================================================================
 const videoElement = document.getElementById('webcam');
 
 async function startCamera() {
@@ -15,7 +17,11 @@ async function startCamera() {
 
 startCamera();
 
+// =============================================================================
+// Dashboard: exercise selection, stats polling, rep counting
+// =============================================================================
 document.addEventListener('DOMContentLoaded', () => {
+    // ---- DOM references ----
     const valueDisplay = document.getElementById('current-value');
     const progressBar = document.getElementById('progress-bar');
     const labelDisplay = document.getElementById('current-label');
@@ -23,13 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxValDisplay = document.getElementById('max-val');
     const repCountDisplay = document.getElementById('rep-count');
 
-    // Global State
+    // ---- Session state ----
     window.currentExercise = 'flexion';
     let maxFlexion = 0;
     let maxOpen = 0;
     let repCount = 0;
     let hasReachedThreshold = false;
 
+    // ---- Controls (called from inline onclick handlers in index.html) ----
     window.changeExercise = function(type, btn) {
         document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -50,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar.style.width = "0%";
     };
 
+    // ---- Polling: fetch /get_stats and update readout, progress bar, reps ----
     async function updateStats() {
         try {
             const response = await fetch('/get_stats');

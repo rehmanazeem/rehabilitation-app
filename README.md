@@ -53,6 +53,7 @@ Pinned versions are in [`requirements.txt`](requirements.txt).
 flowchart LR
     Cam[Webcam] --> CV[OpenCV VideoCapture]
     CV --> HD[HandDetector<br/>MediaPipe Hands]
+    HD --> HM[hand_math<br/>angle / openness]
     HD -->|annotated frames| VF["/video_feed<br/>MJPEG stream"]
     HD -->|latest metric| GS["/get_stats<br/>JSON"]
     VF --> IMG[Video element]
@@ -65,7 +66,10 @@ flowchart LR
   stream parameterized by `?exercise=`), `/get_stats` (latest metric as JSON).
   Owns the camera and a graceful SIGINT shutdown handler.
 - **`services/hand_detector.py`** — `HandDetector` wraps MediaPipe, draws
-  landmarks, and computes the flexion angle / open-close percentage.
+  landmarks, and keeps the last valid reading between frames.
+- **`services/hand_math.py`** — pure landmark maths (interior angle, distance,
+  flexion and open/close readings). No camera or MediaPipe imports, so it is
+  unit-tested with synthetic landmarks.
 - **`templates/index.html`** — dashboard layout (exercise buttons, video
   viewport, data cards).
 - **`static/js/main.js`** — polls `/get_stats`, updates the UI, and runs the
@@ -100,6 +104,15 @@ python app.py
 
 Then open `http://127.0.0.1:8000` in your browser. (The app binds to
 `0.0.0.0:8000`.)
+
+## Tests
+
+The landmark maths is covered by `pytest` (no camera or MediaPipe needed):
+
+```bash
+pip install pytest
+python -m pytest
+```
 
 ## Usage
 
@@ -148,7 +161,10 @@ Rep-counting thresholds (client-side, in `main.js`):
 ```text
 ├── app.py                     # Flask server & routes
 ├── services/
-│   └── hand_detector.py       # MediaPipe logic & landmark math
+│   ├── hand_detector.py       # MediaPipe wrapper & last-valid-state handling
+│   └── hand_math.py           # Pure angle / distance / openness maths
+├── tests/
+│   └── test_hand_math.py      # Synthetic-landmark unit tests
 ├── static/
 │   ├── css/style.css          # Dashboard styles
 │   └── js/main.js             # Session logic & polling
