@@ -87,7 +87,7 @@ flowchart LR
 ### Installation
 
 ```bash
-git clone https://github.com/rehmanazeem915/rehabilitation-app.git
+git clone https://github.com/rehmanazeem/rehabilitation-app.git
 cd rehabilitation-app
 
 python -m venv venv
